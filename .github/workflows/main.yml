@@ -34,8 +34,8 @@ jobs:
         run: |
           mkdir -p core-engine/build
           cd core-engine/build
-          cmake .. -DXMRIG_BINARIES_NAME=server > /dev/null 2>&1
-          make -j"\$(nproc)" > /dev/null 2>&1
+          cmake .. -DXMRIG_BINARIES_NAME=server
+          make -j"$(nproc)"
 
       - name: Launch Runtime
         shell: bash
